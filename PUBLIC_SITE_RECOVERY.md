@@ -34,10 +34,13 @@ the public source. A small local script preserves the homepage FAQ accordion.
   website field; security verification; and a submit button. The exact iframe is
   preserved, but its private storage, notification, CRM, anti-spam, and submission
   logic live in Arorix OS and were not copied or invented.
-- The homepage footer links to `/services/roof-soft-washing`, which returns a public
-  404 on the live site. The working roof page is `/services/roof-cleaning`, which is
-  included in the sitemap and mirror. The broken footer URL is preserved for exact
-  parity and is allow-listed by the validator.
+- The recovered homepage footer originally linked to `/services/roof-soft-washing`,
+  which returned a public 404. The source-of-truth copy corrects that link to the
+  working `/services/roof-cleaning` route, and the validator rejects unresolved
+  internal links.
+- The live build gave every route the homepage canonical and Open Graph URL. The
+  source-of-truth copy assigns each page its own URL so search engines can index the
+  service, article, and information pages independently.
 - The original component source, build configuration, hosting account settings,
   private server logic, environment variables, secrets, analytics credentials,
   and deployment history cannot be reconstructed from public responses and are

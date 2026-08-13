@@ -82,10 +82,9 @@
 
 No actionable P0, P1, or P2 visual or interaction mismatches remain.
 
-- Accepted source issue: the live homepage footer links to
-  `/services/roof-soft-washing`, which returns 404. The working public route is
-  `/services/roof-cleaning`. The broken URL is preserved for exact source parity and
-  documented rather than silently redesigned.
+- Corrected source issue: the recovered homepage footer originally linked to
+  `/services/roof-soft-washing`, which returned 404. It now links to the working
+  `/services/roof-cleaning` route and is covered by strict internal-link validation.
 - Accepted external dependency: the contact form is served by
   `https://os.arorix.com/f/arorixhomesolutions`. Its public iframe and visible
   behavior are preserved, but its private submission backend is outside this repo.
@@ -122,8 +121,7 @@ No actionable P0, P1, or P2 visual or interaction mismatches remain.
 
 ## Follow-up polish
 
-None required for fidelity. A future product change may intentionally correct the
-live footer's `/services/roof-soft-washing` link, but that would be a source-site fix
-rather than a recovery fix.
+Replace the three publicly served placeholder project images and their placeholder
+labels when the owner supplies real No Bull project photos.
 
 final result: passed

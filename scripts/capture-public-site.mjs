@@ -25,7 +25,7 @@ function toOutputFile(route) {
     : path.join(root, route.slice(1), "index.html");
 }
 
-function makeStatic(html) {
+function makeStatic(html, route) {
   const closingHtml = html.indexOf("</html>");
   let clean = closingHtml === -1 ? html : html.slice(0, closingHtml + 7);
 
@@ -40,6 +40,16 @@ function makeStatic(html) {
     "</body>",
     '<script src="/assets/site.js" defer></script></body>',
   );
+
+  // Correct public-source defects while adapting the captured pages.
+  const canonicalUrl = `${origin}${route}`;
+  clean = clean.replaceAll('href="/services/roof-soft-washing"', 'href="/services/roof-cleaning"');
+  if (/<meta property="og:url" content="[^"]*"\/>/.test(clean)) {
+    clean = clean.replace(/<meta property="og:url" content="[^"]*"\/>/, `<meta property="og:url" content="${canonicalUrl}"/>`);
+  } else {
+    clean = clean.replace("</head>", `<meta property="og:url" content="${canonicalUrl}"/></head>`);
+  }
+  clean = clean.replace(/<link rel="canonical" href="[^"]*"\/>/, `<link rel="canonical" href="${canonicalUrl}"/>`);
 
   return `${clean.trim()}\n`;
 }
@@ -69,7 +79,7 @@ await rm(path.join(root, "services"), { recursive: true, force: true });
 for (const route of routes) {
   const output = toOutputFile(route);
   await mkdir(path.dirname(output), { recursive: true });
-  await writeFile(output, makeStatic(await fetchText(`${origin}${route}`)));
+  await writeFile(output, makeStatic(await fetchText(`${origin}${route}`), route));
   console.log(`captured ${route}`);
 }
 

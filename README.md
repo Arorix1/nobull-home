@@ -2,7 +2,7 @@
 
 This repository is the recoverable public source of truth for the website at
 [nobullhome.com](https://nobullhome.com). It contains a static frontend copy
-copy of every route published in the site's sitemap on August 13, 2026, plus the
+of every route published in the site's sitemap on August 13, 2026, plus the
 additional public styling, images, metadata, structured data, links, and client-side
 FAQ behavior needed to reproduce the visible website.
 

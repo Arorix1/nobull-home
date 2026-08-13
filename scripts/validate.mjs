@@ -3,7 +3,6 @@ import path from "node:path";
 import { routes } from "./routes.mjs";
 
 const root = process.cwd();
-const knownLiveBrokenLinks = new Set(["/services/roof-soft-washing"]);
 const failures = [];
 
 function outputFile(route) {
@@ -29,12 +28,19 @@ for (const route of routes) {
   if (route === "/contact" && !html.includes('src="https://os.arorix.com/f/arorixhomesolutions"')) {
     failures.push("/contact: missing the live Arorix OS quote form iframe");
   }
+  const expectedUrl = `https://nobullhome.com${route}`;
+  if (!html.includes(`<link rel="canonical" href="${expectedUrl}"/>`)) {
+    failures.push(`${route}: incorrect canonical URL`);
+  }
+  if (!html.includes(`<meta property="og:url" content="${expectedUrl}"/>`)) {
+    failures.push(`${route}: incorrect Open Graph URL`);
+  }
 
   for (const match of html.matchAll(/(?:href|src)="([^"#][^"]*)"/g)) {
     const href = match[1];
     if (/^(https?:|mailto:|tel:)/.test(href)) continue;
     const targetPath = href.split(/[?#]/)[0];
-    if (!targetPath || knownLiveBrokenLinks.has(targetPath)) continue;
+    if (!targetPath) continue;
     const target = targetPath.startsWith("/") ? targetPath : path.join(route, targetPath);
     try {
       const file = path.extname(target)
