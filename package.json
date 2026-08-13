@@ -1,0 +1,11 @@
+{
+  "name": "nobull-home-public-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node scripts/capture-public-site.mjs",
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "test": "node scripts/validate.mjs"
+  }
+}
