@@ -44,6 +44,7 @@ function makeStatic(html, route) {
   // Correct public-source defects while adapting the captured pages.
   const canonicalUrl = `${origin}${route}`;
   clean = clean.replaceAll('href="/services/roof-soft-washing"', 'href="/services/roof-cleaning"');
+  clean = clean.replaceAll("arorixhomes@gmail.com", "nobullky@gmail.com");
   if (/<meta property="og:url" content="[^"]*"\/>/.test(clean)) {
     clean = clean.replace(/<meta property="og:url" content="[^"]*"\/>/, `<meta property="og:url" content="${canonicalUrl}"/>`);
   } else {

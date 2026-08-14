@@ -25,6 +25,8 @@ for (const route of routes) {
     if (!html.includes(required)) failures.push(`${route}: missing ${required}`);
   }
   if (html.includes("__VINEXT_RSC_")) failures.push(`${route}: still includes deployment-only RSC state`);
+  if (html.includes("arorixhomes@gmail.com")) failures.push(`${route}: still includes the old contact email`);
+  if (!html.includes("nobullky@gmail.com")) failures.push(`${route}: missing the current contact email`);
   if (route === "/contact" && !html.includes('src="https://os.arorix.com/f/arorixhomesolutions"')) {
     failures.push("/contact: missing the live Arorix OS quote form iframe");
   }
