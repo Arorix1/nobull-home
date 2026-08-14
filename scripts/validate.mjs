@@ -34,10 +34,10 @@ for (const route of routes) {
     .replace(/<[^>]+>/g, " ");
   if (/—|--/.test(visibleText)) failures.push(`${route}: visible copy still includes dash-style punctuation`);
   if (route === "/") {
-    for (const required of ["/assets/mobile-home.css", "service-track", "Driveway cleaning", "TV mounting", "Handyman services", "Year-round home care", 'class="service yearlyService"', '<div class="score"><b>5.0 / 5</b><span>TRUSTED ACROSS CENTRAL KENTUCKY</span></div>']) {
+    for (const required of ["/assets/mobile-home.css", "service-track", "Driveway cleaning", "TV mounting", "Handyman services", "Year-round home care", 'class="service yearlyService"', '<div class="score"><b>5 / 5</b><span>TRUSTED ACROSS CENTRAL KENTUCKY</span></div>']) {
       if (!html.includes(required)) failures.push(`/: missing mobile home requirement ${required}`);
     }
-    if (html.includes('<div class="score"><b>5.0</b><span>5.0 / 5')) {
+    if (html.includes('<div class="score"><b>5.0</b><span>5.0 / 5') || html.includes("5.0 / 5")) {
       failures.push("/: duplicate customer rating remains");
     }
   }

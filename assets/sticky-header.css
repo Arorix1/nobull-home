@@ -24,21 +24,60 @@
 }
 
 .score {
-  align-items: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .score > b {
-  letter-spacing: -0.055em;
-  line-height: 0.9;
+  letter-spacing: -0.06em;
+  line-height: 0.82;
 }
 
 .score > span {
-  max-width: 190px;
-  padding-bottom: 6px;
-  color: #777a70;
-  font-size: 8px;
+  max-width: none;
+  padding-bottom: 0;
+  color: #55594f;
+  font-size: 9px;
   font-weight: 800;
   line-height: 1.4;
+}
+
+.service {
+  cursor: pointer;
+  position: relative;
+}
+
+.service > a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.service:focus-within {
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
+}
+
+section[id] {
+  scroll-margin-top: 110px;
+}
+
+.faq h2 em {
+  color: var(--ink) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--acid);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.08em;
+}
+
+.faqList button b {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: var(--ink) !important;
+  background: var(--acid);
 }
 
 .service.yearlyService {
@@ -60,10 +99,14 @@
   }
 
   .score {
-    align-items: center;
+    gap: 7px;
   }
 
   .score > span {
     padding-bottom: 0;
+  }
+
+  section[id] {
+    scroll-margin-top: 96px;
   }
 }
