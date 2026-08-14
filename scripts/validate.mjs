@@ -27,6 +27,11 @@ for (const route of routes) {
   if (html.includes("__VINEXT_RSC_")) failures.push(`${route}: still includes deployment-only RSC state`);
   if (html.includes("arorixhomes@gmail.com")) failures.push(`${route}: still includes the old contact email`);
   if (!html.includes("nobullky@gmail.com")) failures.push(`${route}: missing the current contact email`);
+  if (route === "/") {
+    for (const required of ["/assets/mobile-home.css", "service-track", "Driveway cleaning", "TV mounting", "Handyman services", "Year-round home care"]) {
+      if (!html.includes(required)) failures.push(`/: missing mobile home requirement ${required}`);
+    }
+  }
   if (route === "/contact" && !html.includes('src="https://os.arorix.com/f/arorixhomesolutions"')) {
     failures.push("/contact: missing the live Arorix OS quote form iframe");
   }
@@ -57,6 +62,7 @@ for (const route of routes) {
 
 for (const requiredFile of [
   "assets/index-DDtQlzmV.css",
+  "assets/mobile-home.css",
   "assets/sticky-header.css",
   "assets/site.js",
   "favicon.svg",

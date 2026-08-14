@@ -52,6 +52,30 @@ function makeStatic(html, route) {
       '<link rel="stylesheet" href="/assets/sticky-header.css"/></head>',
     );
   }
+  if (route === "/") {
+    const services = [
+      "Pressure washing",
+      "House soft wash",
+      "Roof cleaning",
+      "Driveway cleaning",
+      "Gutter cleaning",
+      "TV mounting",
+      "Handyman services",
+      "Year-round home care",
+    ];
+    const serviceSet = services.map((service) => `<span>${service}</span>`).join("");
+    const serviceTicker = `<div class="service-list" aria-label="Services"><div class="service-track"><div class="service-set">${serviceSet}</div><div class="service-set" aria-hidden="true">${serviceSet}</div></div></div>`;
+    clean = clean.replace(
+      /<div class="service-list">[\s\S]*?<\/div><\/div><\/section><section class="proofRibbon">/,
+      `${serviceTicker}</div></section><section class="proofRibbon">`,
+    );
+    if (!clean.includes('/assets/mobile-home.css')) {
+      clean = clean.replace(
+        "</head>",
+        '<link rel="stylesheet" href="/assets/mobile-home.css"/></head>',
+      );
+    }
+  }
   if (/<meta property="og:url" content="[^"]*"\/>/.test(clean)) {
     clean = clean.replace(/<meta property="og:url" content="[^"]*"\/>/, `<meta property="og:url" content="${canonicalUrl}"/>`);
   } else {
