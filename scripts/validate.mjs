@@ -27,9 +27,18 @@ for (const route of routes) {
   if (html.includes("__VINEXT_RSC_")) failures.push(`${route}: still includes deployment-only RSC state`);
   if (html.includes("arorixhomes@gmail.com")) failures.push(`${route}: still includes the old contact email`);
   if (!html.includes("nobullky@gmail.com")) failures.push(`${route}: missing the current contact email`);
+  const visibleText = html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<[^>]+>/g, " ");
+  if (/—|--/.test(visibleText)) failures.push(`${route}: visible copy still includes dash-style punctuation`);
   if (route === "/") {
-    for (const required of ["/assets/mobile-home.css", "service-track", "Driveway cleaning", "TV mounting", "Handyman services", "Year-round home care"]) {
+    for (const required of ["/assets/mobile-home.css", "service-track", "Driveway cleaning", "TV mounting", "Handyman services", "Year-round home care", 'class="service yearlyService"', '<div class="score"><b>5.0 / 5</b><span>TRUSTED ACROSS CENTRAL KENTUCKY</span></div>']) {
       if (!html.includes(required)) failures.push(`/: missing mobile home requirement ${required}`);
+    }
+    if (html.includes('<div class="score"><b>5.0</b><span>5.0 / 5')) {
+      failures.push("/: duplicate customer rating remains");
     }
   }
   if (route === "/contact" && !html.includes('src="https://os.arorix.com/f/arorixhomesolutions"')) {
@@ -59,6 +68,10 @@ for (const route of routes) {
     }
   }
 }
+
+const stickyHeaderCss = await readFile(path.join(root, "assets/sticky-header.css"), "utf8");
+if (!stickyHeaderCss.includes("position: fixed")) failures.push("sticky header is not fixed to the viewport");
+if (!stickyHeaderCss.includes("overflow: visible")) failures.push("sticky header can still be clipped by page heroes");
 
 for (const requiredFile of [
   "assets/index-DDtQlzmV.css",

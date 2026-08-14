@@ -1,70 +1,69 @@
-# Design QA — Mobile Homepage Organization and Service Ticker
+# Design QA — Sticky Header, Rating Cleanup, and Yearly Home Care Highlight
 
 ## Comparison target
 
-- Source visual truth path: `/Users/seanc60__/Downloads/Pressure Washing Lexington KY  No Bull Home Services.png`.
-- Implementation screenshot path: `work/mobile-home-implementation-pass2.png`.
-- Side-by-side comparison path: `work/mobile-home-qa-comparison-pass2.png`.
-- Route: homepage, initial mobile state at the top of the page.
-- Intended change: organize the mobile hero while preserving the existing No Bull visual language, and expose every service through a horizontally moving neon banner.
+- Source visual truth: `/var/folders/c3/lxb1fts13fb2hhps_ft668ym0000gn/T/TemporaryItems/NSIRD_screencaptureui_n6sMI8/Screenshot 2026-08-13 at 10.32.41 PM.png`.
+- Desktop implementation: `work/header-polish-desktop-reviews.png`.
+- Mobile implementation: `work/header-polish-mobile-reviews.png` and `work/header-polish-mobile-yearly.png`.
+- Side-by-side comparison: `work/header-polish-comparison.png`.
+- Routes and states: homepage reviews section and services section after scrolling.
+- Intended change: keep the full header fixed on desktop and mobile, show the rating once as `5.0 / 5`, remove visible dash separators from copy, and highlight Yearly Home Care in acid yellow.
 
 ## Viewport and normalization
 
-- Source pixels: 1320 × 2868, including iPhone status and Safari browser chrome.
-- Source normalized copy: 393 × 852 pixels at `work/mobile-home-source-normalized.png`.
-- Implementation: 393 × 852 CSS pixels and 393 × 852 screenshot pixels.
-- Device scale factor: 1 for the implementation capture.
-- Density normalization: the source was proportionally downsampled to the implementation viewport. Safari and iPhone chrome were excluded from app-content judgments.
+- Source pixels: 1974 × 1280, including macOS and Chrome chrome.
+- Desktop implementation: 1280 × 720 CSS pixels and screenshot pixels, device scale factor 1.
+- Mobile implementation: 393 × 852 CSS pixels and screenshot pixels, device scale factor 1.
+- The source and implementation were placed in one side-by-side comparison image with proportional aspect-fit normalization. Browser chrome was excluded from webpage-content judgments.
 
 ## Full-view comparison evidence
 
-- The side-by-side comparison shows the same black, off-white, gray, and acid-green visual system as the reference.
-- The implementation intentionally keeps the previously requested sticky header visible. The headline is reduced enough to avoid the clipping shown in the source while preserving the same aggressive uppercase hierarchy.
-- The hero content is now a single compact vertical flow: headline, supporting copy, quote action, secondary link, trust points, service ticker, then proof stats.
-- The neon service banner enters within the first phone viewport, and the first proof row is visible immediately below it.
+- The reference shows the reviews section with an empty black strip where the header should remain and a duplicated `5.0` plus `5.0 / 5` rating.
+- The implementation keeps the complete branded header visible at the top after scrolling, preserves the original header height and navigation layout, and displays one clear `5.0 / 5` rating.
+- Review cards, section typography, off-white background, black card, and acid-green quote accents remain consistent with the established design.
 
 ## Focused region comparison evidence
 
-- No additional crop was required because the 393-pixel comparison keeps the headline, CTA, trust row, ticker text, and proof labels legible at their rendered size.
-- The ticker was also inspected in the browser over time: its computed transform changed while running, confirming visible horizontal motion rather than a static clipped row.
+- Desktop header bounds were measured after scrolling: fixed position, top `0`, bottom `97`, display `flex`.
+- Mobile header bounds were measured after scrolling: fixed position, top `0`, bottom `82`.
+- The Yearly Home Care card was inspected at 393 × 852 and measured with an acid-green background of `rgb(223, 255, 55)`.
+- The mobile page reported zero horizontal overflow, and no console errors or warnings were present.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: passed. Existing production typefaces, weights, uppercase treatment, tracking, and optical hierarchy are preserved. Mobile headline sizing and wrapping are intentionally tightened to prevent cropping.
-- Spacing and layout rhythm: passed. The mobile hero no longer inherits a desktop-style minimum height. Content uses consistent 20-pixel side gutters, compact vertical spacing, a two-column trust grid, and aligned proof cells. No page-width overflow was detected.
-- Colors and visual tokens: passed. Existing ink, paper, gray, acid-green, border, and shadow tokens are reused without introducing a new palette.
-- Image quality and asset fidelity: passed. This section contains no raster imagery or custom icon assets. Existing brand marks remain unchanged.
-- Copy and content: passed. Core hero copy and calls to action are unchanged. The ticker now includes all eight service categories: pressure washing, house soft wash, roof cleaning, driveway cleaning, gutter cleaning, TV mounting, handyman services, and year-round home care.
-- Interaction and motion: passed. The ticker loops continuously, duplicates are hidden from accessibility APIs, reduced-motion users receive a manually scrollable row, and the sticky quote action remains visible.
-- Accessibility: passed. The services region has an accessible label, duplicate ticker content is `aria-hidden`, motion respects `prefers-reduced-motion`, and existing navigation and CTA semantics remain intact.
+- Fonts and typography: passed. Existing production typefaces, uppercase treatment, tracking, and scale are preserved. The rating was consolidated without introducing a new type style.
+- Spacing and layout rhythm: passed. The header keeps its existing desktop and mobile geometry while remaining fixed above content. Review and service layouts retain their established spacing.
+- Colors and visual tokens: passed. The Yearly Home Care highlight reuses the site's existing acid-green token; no new palette values were introduced.
+- Image and brand fidelity: passed. The crooked acid-green `NB` logo and existing header branding remain unchanged.
+- Copy and content: passed. The duplicate rating was removed, the surviving value reads `5.0 / 5`, and visible em-dash/double-dash separators were removed from route copy.
+- Interaction: passed. Navigation, quote action, service links, sticky behavior, and the existing mobile service presentation remain functional.
+- Accessibility: passed. Existing link and navigation semantics, focus behavior, and interactive targets are preserved; the change is visual and copy-level only.
 
 ## Comparison history
 
 ### Pass 1
 
-- Finding [P2]: the first organized version still kept the proof stats below the initial 393 × 852 viewport.
-- Evidence: `work/mobile-home-implementation-pass1.png` and `work/mobile-home-qa-comparison-pass1.png`.
-- Fix: reduced mobile hero top and bottom padding, tightened trust-row spacing, and removed the redundant location eyebrow on mobile only.
+- Source finding [P1]: the fixed header was clipped when its containing hero scrolled out of view, leaving only an empty black band.
+- Source finding [P2]: the reviews heading showed a redundant large `5.0` beside `5.0 / 5`.
+- Fix: allowed the hero containers to expose their fixed header, consolidated the score into one accessible text value, and retained the existing sticky-header rules for both responsive modes.
 
 ### Pass 2
 
-- Post-fix evidence: `work/mobile-home-implementation-pass2.png` and `work/mobile-home-qa-comparison-pass2.png`.
-- Result: the neon ticker and first proof row now appear in the initial viewport; the headline, supporting copy, CTA, secondary action, and trust points remain readable with no overlap or horizontal page overflow.
-- Browser checks: ticker animation running, all eight services present, sticky header fixed at the top, quote CTA available, primary page link functional, and no console errors or warnings.
+- Evidence: `work/header-polish-comparison.png`, `work/header-polish-mobile-reviews.png`, and `work/header-polish-mobile-yearly.png`.
+- Result: full desktop and mobile headers stay visible after scrolling; rating is shown once; Yearly Home Care is clearly highlighted; no visible dash separators, mobile overflow, or console errors remain.
 
 ## Findings
 
-- No actionable P0, P1, or P2 findings remain.
-- P3 follow-up: animation speed can be tuned later if real-device feedback suggests a slower or faster pass.
+- No actionable P0, P1, P2, or P3 findings remain.
 
 ## Implementation checklist
 
-- [x] Compact mobile hero flow.
-- [x] Preserve existing desktop layout.
-- [x] Include all eight services.
-- [x] Add seamless horizontal ticker motion.
-- [x] Add reduced-motion/manual-scroll fallback.
-- [x] Organize trust and proof content.
-- [x] Verify 393 × 852 layout, motion, overflow, sticky header, and console state.
+- [x] Sticky branded header on desktop and mobile.
+- [x] Single clean `5.0 / 5` rating.
+- [x] Remove visible dash separators from route copy.
+- [x] Acid-yellow Yearly Home Care service highlight.
+- [x] Verify desktop and mobile scroll states.
+- [x] Verify zero mobile overflow and zero console errors/warnings.
+- [x] Compare source and implementation in one visual input.
 
 final result: passed
