@@ -50,6 +50,12 @@ function makeStatic(html, route) {
     clean = clean.replace("</head>", `<meta property="og:url" content="${canonicalUrl}"/></head>`);
   }
   clean = clean.replace(/<link rel="canonical" href="[^"]*"\/>/, `<link rel="canonical" href="${canonicalUrl}"/>`);
+  if (!/<link\b[^>]*rel=["']icon["']/.test(clean)) {
+    clean = clean.replace(
+      "</head>",
+      '<link rel="icon" type="image/svg+xml" href="/favicon.svg"/></head>',
+    );
+  }
 
   return `${clean.trim()}\n`;
 }

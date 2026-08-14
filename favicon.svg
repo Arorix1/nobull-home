@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>No Bull Home Services</title>
+  <rect width="64" height="64" rx="10" fill="#11130f"/>
+  <rect x="3" y="3" width="58" height="58" rx="8" fill="none" stroke="#e2ff3f" stroke-width="3"/>
+  <text x="32" y="42" fill="#e2ff3f" font-family="Arial Black, Arial, sans-serif" font-size="29" font-weight="900" letter-spacing="-2" text-anchor="middle">NB</text>
+</svg>
