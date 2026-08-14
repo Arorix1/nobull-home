@@ -45,6 +45,13 @@ function makeStatic(html, route) {
   const canonicalUrl = `${origin}${route}`;
   clean = clean.replaceAll('href="/services/roof-soft-washing"', 'href="/services/roof-cleaning"');
   clean = clean.replaceAll("arorixhomes@gmail.com", "nobullky@gmail.com");
+  clean = clean.replace("Sunday: Closed", "Sunday: 9am–4pm");
+  if (!clean.includes('/assets/sticky-header.css')) {
+    clean = clean.replace(
+      "</head>",
+      '<link rel="stylesheet" href="/assets/sticky-header.css"/></head>',
+    );
+  }
   if (/<meta property="og:url" content="[^"]*"\/>/.test(clean)) {
     clean = clean.replace(/<meta property="og:url" content="[^"]*"\/>/, `<meta property="og:url" content="${canonicalUrl}"/>`);
   } else {

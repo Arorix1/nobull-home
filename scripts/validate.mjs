@@ -21,7 +21,7 @@ for (const route of routes) {
     continue;
   }
 
-  for (const required of ["<title>", 'name="description"', "<h1", "/assets/index-DDtQlzmV.css", '<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>']) {
+  for (const required of ["<title>", 'name="description"', "<h1", "/assets/index-DDtQlzmV.css", "/assets/sticky-header.css", '<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>']) {
     if (!html.includes(required)) failures.push(`${route}: missing ${required}`);
   }
   if (html.includes("__VINEXT_RSC_")) failures.push(`${route}: still includes deployment-only RSC state`);
@@ -57,6 +57,7 @@ for (const route of routes) {
 
 for (const requiredFile of [
   "assets/index-DDtQlzmV.css",
+  "assets/sticky-header.css",
   "assets/site.js",
   "favicon.svg",
   "images/placeholder-driveway-cleaning.webp",
